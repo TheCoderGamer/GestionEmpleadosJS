@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Empleados</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src='gestionEmpleado.js'></script>
+    <link rel="stylesheet" href="index.css">
+
+</head>
+
+<body>
+    <h1>Gestion de empleados</h1>
+    <div id="seccion1">
+        <h2 id="opcion">Buscar empleado</h2>
+        <div class="buscador">
+            <div>
+                <span>ID<input type="text" id="id"></span>
+                <span>Nº Empleado<input type="text" id="nempleado"></span>
+                <span>Nombre<input type="text" id="nombre"></span>
+                <span>Apellido<input type="text" id="apellido"></span>
+                <span>Puesto<input type="text" id="puestotr"></span>
+                <span>Departamento<input type="text" id="departamento"></span>
+            </div>
+        </div>
+        
+        <input type="button" value="Buscar" onclick="buscarEmpleado()" id="boton1">
+        <input type="button" value="Crear" onclick="crearEmpleado()" id="boton2">
+        <input type="button" value="Cargar todos los empleados" onclick="cargarTodos()" id="boton0">
+        <div id="msg" style="display: none;"></div>
+    </div>
+    <div id="seccion2">
+        <table id="tablaEmpleados"></table>
+    </div>
+</body>
+
+</html>
