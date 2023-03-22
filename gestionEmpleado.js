@@ -1,4 +1,8 @@
-// Definir la clase Empleado
+window.onload = () => {
+    getEmployees();
+};
+
+// --- Clase empleado ---
 class Empleado {
     constructor(id, nombre, apellido, nempleado, puestotr, departamento) {
         this.id = id;
@@ -10,17 +14,13 @@ class Empleado {
     }
 }
 
+// Variables globales
 var empleados = [];
 var listaActiva = [];
 
-// Obtener datos
-
-window.onload = () => {
-    getEmployees();
-};
 
 
-
+// --- Obtener datos ---
 function getEmployees() {
     var request = new XMLHttpRequest();
 
@@ -50,7 +50,8 @@ function getEmployees() {
 }
 
 
-// Metodos gestion empleados
+
+// --- Gestion empleados ---
 
 // Crear empleado
 function crearEmpleado() {
@@ -80,24 +81,24 @@ function crearEmpleado() {
     let msg1 = document.createElement("p");
     msg1.innerHTML = "El id se genera automaticamente, si desea asignar uno, rellene el campo id";
     msg.appendChild(msg1);
-    
+
 }
 
-function crearEmpleadoBBDD(){
+function crearEmpleadoBBDD() {
     // ---- Crear empleado en base de datos ----
     let id = parseInt(document.getElementById("id").value);
-    
+
     // Limpiar errores
     let msg = document.getElementById("msg");
     let errors = msg.getElementsByClassName("error");
     for (let i = 0; i < errors.length; i++) {
         errors[i].remove();
-    }        
+    }
 
     if (id == "" || isNaN(id)) {
         id = empleados.length + 1;
     }
-    
+
     // Check if id is not repeated
 
     if (empleados.find((emp) => emp.id === id) !== undefined) {
@@ -108,14 +109,14 @@ function crearEmpleadoBBDD(){
         msg.appendChild(msgError);
         return;
     }
-    
-    
+
+
     let nombre = document.getElementById("nombre").value;
     let apellido = document.getElementById("apellido").value;
     let nempleado = document.getElementById("nempleado").value;
     let puestotr = document.getElementById("puestotr").value;
     let departamento = document.getElementById("departamento").value;
-    
+
     // Check no esta vacio
     if (nombre == "" || apellido == "" || nempleado == "" || puestotr == "" || departamento == "") {
         let msg = document.getElementById("msg");
@@ -125,15 +126,16 @@ function crearEmpleadoBBDD(){
         msg.appendChild(msgError);
         return;
     }
-    
+
     let empleado = new Empleado(id, nombre, apellido, nempleado, puestotr, departamento);
-    
+
     empleados.push(empleado);
 
     alert("Empleado [" + nombre + "] creado correctamente");
-    
+
     cargarTodos();
 }
+
 
 // Eliminar empleado
 function eliminarEmpleado() {
@@ -150,8 +152,8 @@ function eliminarEmpleado() {
     cargarTodos();
 }
 
-// Modificar empleado
 
+// Modificar empleado
 function modificarEmpleado() {
     let id = document.getElementById("id").value;
     let nombre = document.getElementById("nombre").value;
@@ -175,8 +177,7 @@ function modificarEmpleado() {
     cargarTodos();
 }
 
-
-function modificar(id){
+function modificar(id) {
     // obtener empleado
     let empleado = empleados.find((emp) => emp.id == id);
     // eliminar tabla
@@ -215,16 +216,9 @@ function modificar(id){
 
 
 
+// --- Tabla empleados ---
 
-
-
-
-// Crear tabla empleados dinamicamente 
-
-function cargarTodos() {
-    crearTabla(empleados);
-}
-
+// Restablecer campos de la vista
 function limpiarCamposBusqueda() {
     let id = document.getElementById("id");
     id.value = "";
@@ -251,7 +245,12 @@ function limpiarCamposBusqueda() {
     msg.style.display = "none";
 }
 
+// Crear tabla con todos los empleados
+function cargarTodos() {
+    crearTabla(empleados);
+}
 
+// Crear tabla con los empleados de la lista pasada por parametro
 function crearTabla(lista) {
     limpiarCamposBusqueda();
 
@@ -343,18 +342,21 @@ function crearTabla(lista) {
 
     tabla.appendChild(tbody);
 
-    
+
 
 }
 
+
+
+// --- Ordenar tabla ---
+
 var sortBool = true;
 
-// Ordenar tabla
 function ordenarPorId() {
     if (sortBool) {
         listaActiva.sort((a, b) => a.id - b.id);
         sortBool = false;
-    }else {
+    } else {
         listaActiva.sort((a, b) => b.id - a.id);
         sortBool = true;
     }
@@ -365,7 +367,7 @@ function ordenarPorNombre() {
     if (sortBool) {
         listaActiva.sort((a, b) => a.nombre.localeCompare(b.nombre));
         sortBool = false;
-    }else {
+    } else {
         listaActiva.sort((a, b) => b.nombre.localeCompare(a.nombre));
         sortBool = true;
     }
@@ -376,7 +378,7 @@ function ordenarPorApellido() {
     if (sortBool) {
         listaActiva.sort((a, b) => a.apellido.localeCompare(b.apellido));
         sortBool = false;
-    }else {
+    } else {
         listaActiva.sort((a, b) => b.apellido.localeCompare(a.apellido));
         sortBool = true;
     }
@@ -387,18 +389,18 @@ function ordenarPorNempleado() {
     if (sortBool) {
         listaActiva.sort((a, b) => a.nempleado.localeCompare(b.nempleado));
         sortBool = false;
-    }else {
+    } else {
         listaActiva.sort((a, b) => b.nempleado.localeCompare(a.nempleado));
         sortBool = true;
     }
     crearTabla(listaActiva);
-}   
+}
 
 function ordenarPorPuestotr() {
     if (sortBool) {
         listaActiva.sort((a, b) => a.puestotr.localeCompare(b.puestotr));
         sortBool = false;
-    }else {
+    } else {
         listaActiva.sort((a, b) => b.puestotr.localeCompare(a.puestotr));
         sortBool = true;
     }
@@ -409,7 +411,7 @@ function ordenarPorDepartamento() {
     if (sortBool) {
         listaActiva.sort((a, b) => a.departamento.localeCompare(b.departamento));
         sortBool = false;
-    }else {
+    } else {
         listaActiva.sort((a, b) => b.departamento.localeCompare(a.departamento));
         sortBool = true;
     }
@@ -417,8 +419,7 @@ function ordenarPorDepartamento() {
 }
 
 
-
-// Buscar empleado
+// --- Buscar empleado ---
 
 function buscarEmpleado() {
     let id = document.getElementById("id").value.toLowerCase();
@@ -427,39 +428,39 @@ function buscarEmpleado() {
     let nempleado = document.getElementById("nempleado").value.toLowerCase();
     let puestotr = document.getElementById("puestotr").value.toLowerCase();
     let departamento = document.getElementById("departamento").value.toLowerCase();
-  
-    let listaFiltrada = empleados.filter((emp) => {
-      return (
-        (emp.id.toString() === id || id === "") &&
-        (emp.nombre.toLowerCase().includes(nombre) || nombre === "") &&
-        (emp.apellido.toLowerCase().includes(apellido) || apellido === "") &&
-        (emp.nempleado.toString().toLowerCase().includes(nempleado) || nempleado === "") &&
-        (emp.puestotr.toLowerCase().includes(puestotr) || puestotr === "") &&
-        (emp.departamento.toLowerCase().includes(departamento) || departamento === "")
-      );
-    });
-  
-    crearTabla(listaFiltrada);
-  }
 
-  function buscarEmpleadoExacto() {
+    let listaFiltrada = empleados.filter((emp) => {
+        return (
+            (emp.id.toString() === id || id === "") &&
+            (emp.nombre.toLowerCase().includes(nombre) || nombre === "") &&
+            (emp.apellido.toLowerCase().includes(apellido) || apellido === "") &&
+            (emp.nempleado.toString().toLowerCase().includes(nempleado) || nempleado === "") &&
+            (emp.puestotr.toLowerCase().includes(puestotr) || puestotr === "") &&
+            (emp.departamento.toLowerCase().includes(departamento) || departamento === "")
+        );
+    });
+
+    crearTabla(listaFiltrada);
+}
+
+function buscarEmpleadoExacto() {
     let id = document.getElementById("id").value.toLowerCase();
     let nombre = document.getElementById("nombre").value.toLowerCase();
     let apellido = document.getElementById("apellido").value.toLowerCase();
     let nempleado = document.getElementById("nempleado").value.toLowerCase();
     let puestotr = document.getElementById("puestotr").value.toLowerCase();
     let departamento = document.getElementById("departamento").value.toLowerCase();
-  
+
     let listaFiltrada = empleados.filter((emp) => {
-      return (
-        (emp.id.toString().toLowerCase() === id || id === "") &&
-        (emp.nombre.toLowerCase() === nombre || nombre === "") &&
-        (emp.apellido.toLowerCase() === apellido || apellido === "") &&
-        (emp.nempleado.toString().toLowerCase() === nempleado || nempleado === "") &&
-        (emp.puestotr.toLowerCase() === puestotr || puestotr === "") &&
-        (emp.departamento.toLowerCase() === departamento || departamento === "")
-      );
+        return (
+            (emp.id.toString().toLowerCase() === id || id === "") &&
+            (emp.nombre.toLowerCase() === nombre || nombre === "") &&
+            (emp.apellido.toLowerCase() === apellido || apellido === "") &&
+            (emp.nempleado.toString().toLowerCase() === nempleado || nempleado === "") &&
+            (emp.puestotr.toLowerCase() === puestotr || puestotr === "") &&
+            (emp.departamento.toLowerCase() === departamento || departamento === "")
+        );
     });
-  
+
     crearTabla(listaFiltrada);
-  }
+}
